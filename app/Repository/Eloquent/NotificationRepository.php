@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Repository\Eloquent;
 use App\Models\notification;
+use App\Repository\ind;
 use App\Repository\NotificationRepository as NotificationRepositoryInterface;
 
 class NotificationRepository implements NotificationRepositoryInterface
@@ -47,5 +48,15 @@ class NotificationRepository implements NotificationRepositoryInterface
         return $this->notification
             ->scopeRecipient($id)
             ->get();
+    }
+
+    public function findByFilters(array $filters)
+    {
+        $notification = $this->notification->newQuery();
+        foreach ($filters ?? [] as $key => $filter) {
+            $notification->where($key, $filter);
+        }
+
+        return $notification->first();
     }
 }

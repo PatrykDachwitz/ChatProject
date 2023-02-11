@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace Tests\Feature\Api\Notification;
 
-class NotAuthUserTest extends DefaultParametr
+class NotificationNotAuthUserTest extends NotificationDefaultParametr
 {
 
     public function testIndex() {

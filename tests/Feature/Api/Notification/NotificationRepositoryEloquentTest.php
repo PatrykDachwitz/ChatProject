@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class RepositoryEloquentTest extends DefaultParametr
+class NotificationRepositoryEloquentTest extends NotificationDefaultParametr
 {
     /**
      * A basic feature test example.
@@ -32,6 +32,19 @@ class RepositoryEloquentTest extends DefaultParametr
 
         $this->assertDatabaseHas('notifications', $this->correctData);
     }
+
+    public function testfindByFilters() {
+        $response = $this->repository->findByFilters([
+            'message' => "Lorem ipsum",
+            'sender_id' => 1,
+            'recipient_id' => 2
+        ]);
+
+        $correctStructure = $this->comparisonKeyWithModel($response, $this->expectedKeys);
+
+        $this->assertEquals($this->expectedKeys, $correctStructure);
+    }
+
     public function testFind()
     {
         $notification = $this->repository->find(1);

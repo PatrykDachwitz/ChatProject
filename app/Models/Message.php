@@ -16,8 +16,13 @@ class Message extends Model
         'recipient_id'
     ];
 
-    public function scopeRecipientsMessage(int $id) {
-        return $this->where('recipient_id', $id)
-            ->orWhere('sender_id', $id);
+   /* public function scopeRecipientsMessage(int $recipient, int $sender) {
+        //$customQuery = "recipient_id IN {$recipient}, {$sender} AND sender_id IN {$recipient}, {$sender}";
+        return $this->where('created_at', $recipient, $sender);
+    }
+*/
+    public function scopeRecipientsMessage($sender,  $recipient) {
+        return $this->whereIn('sender_id', [1, 2])
+            ->whereIn('recipient_id', [1, 2]);
     }
 }

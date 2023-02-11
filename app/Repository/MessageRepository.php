@@ -4,7 +4,7 @@ namespace App\Repository;
 
 interface MessageRepository
 {
-    public function get(int $id);
+    public function get(array $data);
     public function find(int $id);
     public function create(array $data);
     public function update(array $data, int $id);

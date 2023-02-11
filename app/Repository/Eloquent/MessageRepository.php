@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Repository\Eloquent;
 
 use App\Models\Message;
@@ -14,10 +14,25 @@ class MessageRepository implements MessageRepositoryInterface
         $this->message = $message;
     }
 
-    public function get(int $id)
+    public function get(array $data)
     {
-        return $this->message
-            ->scopeRecipientsMessage($id)
+        if(
+            !isset($data['filters']['sender'])
+            |
+            !isset($data['filters']['recipient'])
+        ) return [];
+
+        $messages = $this->message->newQuery();
+
+        $messages->whereIn('sender_id', [$data['filters']['sender'], $data['filters']['recipient']]);
+        $messages->whereIn('recipient_id', [$data['filters']['sender'], $data['filters']['recipient']]);
+
+        foreach ($data['filters']['created_at'] ?? [] as $filter) {
+            $messages->where('created_at',$filter['type'], $filter['value']);
+        }
+        return $messages
+            ->limit($data['limit'] ?? 20)
+            ->latest()
             ->get();
     }
 

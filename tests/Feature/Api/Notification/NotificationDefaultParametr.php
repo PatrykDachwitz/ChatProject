@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class DefaultParametr extends TestCase
+class NotificationDefaultParametr extends TestCase
 {
     protected $correctData, $errorData, $repository, $expectedKeys;
     protected function setUp(): void

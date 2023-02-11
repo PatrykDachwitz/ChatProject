@@ -24,7 +24,6 @@ Route::group([
     'middleware' => 'auth:sanctum'
 ], function() {
     Route::group([
-       "notification.",
        'prefix' => "notifications",
        'as' => "notifications."
     ], function() {
@@ -38,5 +37,19 @@ Route::group([
             ->name('update');
         Route::delete("/{id}", "NotificationController@destroy")
             ->name('destroy');
+    });
+
+    Route::group([
+        'prefix' => "messages",
+        'as' => "messages."
+    ], function () {
+        Route::get("/", "MessageController@index")
+            ->name('index');
+        Route::post("/", "MessageController@store")
+            ->name('store');
+        Route::get("/{id}", "MessageController@show")
+            ->name('show');
+        Route::put("/{id}", "MessageController@update")
+            ->name('update');
     });
 });

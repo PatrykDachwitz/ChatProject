@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-class AuthUserTest extends DefaultParametr
+class NotificationAuthUserTest extends NotificationDefaultParametr
 {
 
     protected function setUp(): void

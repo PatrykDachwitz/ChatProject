@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Http\Middleware;
 
+use App\Models\Message;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -22,6 +23,16 @@ class CustomAuthSite
             if ($user->id == $id) return true;
             return false;
         });
+
+
+        Gate::define('recipientsMessage', function (User $user, Message $message) {
+            if ($message->sender_id !== $user->id & $message->recipient_id !== $user->id) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+
 
         return $next($request);
     }
