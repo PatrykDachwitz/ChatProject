@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Api\Notification;
 
 use App\Models\notification;
+use App\Models\User;
 use App\Repository\Eloquent\NotificationRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -40,12 +41,29 @@ class NotificationDefaultParametr extends TestCase
 
         $this->repository = new NotificationRepository($notification);
         $this->hasExpectationOnOutput();
+
+        User::factory()->create([
+            'id' => 15
+        ]);
     }
     /**
      * A basic feature test example.
      *
      * @return void
      */
+
+    protected function compariseUser($notifications, $mustIssetSender) {
+        foreach ($notifications ?? [] as $notification) {
+            if(count($notification['relationUser']) > 1) {
+                return false;
+            } elseif (count($notification['relationUser']) === 1 & $notification->sender_id === $notification['relationUser'][0]->id) {
+                continue;
+            } elseif ($notification->sender_id === $mustIssetSender & count($notification['relationUser']) === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public function verificationRecipient(int $idRecipient, $data) {
 

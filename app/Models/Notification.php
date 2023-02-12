@@ -18,4 +18,8 @@ class notification extends Model
     public function scopeRecipient(int $id) {
         return $this->where('recipient_id', $id);
     }
+
+    public function relationUser() {
+        return $this->hasMany(User::class, "id", "sender_id");
+    }
 }

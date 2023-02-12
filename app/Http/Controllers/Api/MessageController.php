@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\DeleteNotification;
 use App\Events\MessageNotice;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Message;
@@ -27,6 +28,8 @@ class MessageController extends Controller
         $recipient = $request->only('filters')['filters']['recipient'];
 
         if (Gate::denies('mySelf', $sender) & Gate::denies('mySelf', $recipient)) abort(403);
+
+        event(new DeleteNotification($sender, $recipient));
 
         return response(new Messages(
            $this->messageRepository->get($request->all())

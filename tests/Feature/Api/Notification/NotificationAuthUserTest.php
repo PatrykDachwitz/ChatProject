@@ -43,6 +43,7 @@ class NotificationAuthUserTest extends NotificationDefaultParametr
         notification::factory()->count(3)->create([
             'recipient_id' => 2
         ]);
+
         $response = $this->get(route('api.notifications.index'));
 
         $notificationsCorrectRecipient = $this->verificationRecipient(40, $response->json());

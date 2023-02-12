@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([
     'as' => "api.",
     'namespace' => "App\Http\Controllers\Api",
-    'middleware' => 'auth:sanctum'
+   // 'middleware' => 'auth:sanctum'
 ], function() {
     Route::group([
        'prefix' => "notifications",

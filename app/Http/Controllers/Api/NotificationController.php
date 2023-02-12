@@ -27,7 +27,7 @@ class NotificationController extends Controller
 
     public function index() {
         return response(new Notifications(
-          $this->notificationRepository->get(Auth::id())
+          $this->notificationRepository->get(2)
         ));
     }
 

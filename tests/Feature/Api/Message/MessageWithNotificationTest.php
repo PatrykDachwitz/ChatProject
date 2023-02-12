@@ -62,11 +62,6 @@ class MessageWithNotificationTest extends DefaultParametr
             'recipient_id' => 1,
         ]);
     }
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function testCreate()
     {
         $response = $this->post(route('api.messages.store'), $this->correctData);
@@ -108,4 +103,16 @@ class MessageWithNotificationTest extends DefaultParametr
         $response->assertStatus(200);
     }
 
+
+    public function testIndexDeleteNotification() {
+        $response = $this->get($this->urlWithQuery(route('api.messages.index'), $this->queryAnyRecipientSender));
+
+        $this->assertDatabaseMissing('notifications', [
+            'message' => $this->message,
+            'sender_id' => 1,
+            'recipient_id' => 2,
+        ]);
+        $this->otherNotificationsIsset();
+        $response->assertStatus(200);
+    }
 }

@@ -47,6 +47,7 @@ class NotificationRepository implements NotificationRepositoryInterface
         $this->id = $id;
         return $this->notification
             ->scopeRecipient($id)
+            ->with('relationUser')
             ->get();
     }
 

@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Api\Notification;
 
 use App\Models\notification;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -56,11 +57,18 @@ class NotificationRepositoryEloquentTest extends NotificationDefaultParametr
 
     public function testGet()
     {
+
         notification::factory()
             ->count(3)
             ->create([
+                'sender_id' => 2,
                 'recipient_id' => 40
             ]);
+
+        User::factory()->create([
+            'id' => 2
+        ]);
+
         notification::factory()
             ->count(3)
             ->create([
@@ -70,8 +78,10 @@ class NotificationRepositoryEloquentTest extends NotificationDefaultParametr
         $notification = $this->repository->get(40);
 
         $resultVerificationRecipient = $this->verificationRecipient(40, $notification);
+        $resultVerificationSender = $this->compariseUser($notification, 2);
 
         $this->assertTrue($resultVerificationRecipient);
+        $this->assertTrue($resultVerificationSender);
         $this->assertCount(3, $notification);
     }
 

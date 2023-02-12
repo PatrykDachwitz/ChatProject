@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Api\Message;
 
 use App\Models\Message;
+use App\Models\User;
 use App\Repository\Eloquent\MessageRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -165,7 +166,10 @@ class DefaultParametr extends TestCase
             'recipient_id'
         ];
     }
-
+    protected function urlWithQuery(string $url, array $data) {
+        $query = http_build_query($data);
+        return "{$url}?{$query}";
+    }
 
     public function compariseDateWithSearchDate(string $date,string $searchDate, string $type = "==") {
         $date = strtotime($date);

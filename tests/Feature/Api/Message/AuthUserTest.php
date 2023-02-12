@@ -28,10 +28,6 @@ class AuthUserTest extends DefaultParametr
      * @return void
      */
 
-    protected function urlWithQuery(string $url, array $data) {
-        $query = http_build_query($data);
-        return "{$url}?{$query}";
-    }
     public function testIndexWithRecipientAndSender() {
         $response = $this->get($this->urlWithQuery(route('api.messages.index'), $this->queryAnyRecipientSender));
         $correctMessages = $this->verificationRecipientsMessages($response->json(), $this->queryAnyRecipientSender['filters']);

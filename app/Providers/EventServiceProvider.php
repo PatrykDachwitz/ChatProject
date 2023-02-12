@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Events\MessageNotice;
+use App\Listeners\DeleteNotification;
 use App\Listeners\NotificationRegister;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Events\DeleteNotification as DeleteNotificationEvent;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         MessageNotice::class => [
             NotificationRegister::class
+        ],
+        DeleteNotificationEvent::class => [
+            DeleteNotification::class
         ]
     ];
 
